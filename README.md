@@ -2,8 +2,7 @@
 
 ## SYNTax Highlighting EXtendER
 
-A syntax highlighting extension for C# code files.
-Visual Studio 2017 v15.7+.
+An extension for VS2017 v15.7+ for extended syntax highlighting of C# code files. 
 
 ![Synthexer settings](https://i.imgur.com/Z8JhpCd.png)
 
