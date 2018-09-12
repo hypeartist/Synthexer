@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Classification;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.FindSymbols;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
@@ -118,7 +119,7 @@ namespace Synthexer.Core
         }
 
         private IEnumerable<ITagSpan<IClassificationTag>> GetTagsImpl(Cache doc, NormalizedSnapshotSpanCollection spans)
-		{
+		{			
 			var snapshot = spans[0].Snapshot;
 
 			var classifiedSpans = GetClassifiedSpans(doc.Workspace, doc.SemanticModel, spans);
@@ -144,7 +145,8 @@ namespace Synthexer.Core
 					continue;
 				}
 				if (symbol == null) continue;
-                switch (symbol.Kind)
+
+				switch (symbol.Kind)
 				{
                     case SymbolKind.Field:
 						switch (span.ClassificationType)
