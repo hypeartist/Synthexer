@@ -36,7 +36,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Synthexer</RootNamespace>
     <AssemblyName>Synthexer</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
   </PropertyGroup>
@@ -57,6 +57,12 @@
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '15.0' ">
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '16.0' ">
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '17.0' ">
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
@@ -76,36 +82,36 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Update="PlaceholderToConvinceThisProjectToGetTransitivePackageReferenceFromProjectReferences" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="2.8.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.8.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.EditorFeatures.Text" Version="2.8.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="2.8.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="2.8.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.1.0-beta1-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.1.0-beta1-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.EditorFeatures.Text" Version="3.1.0-beta1-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="3.1.0-beta1-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="3.1.0-beta1-final" />
     <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
     <PackageReference Include="Microsoft.VisualStudio.ComponentModelHost">
-      <Version>15.7.27703</Version>
+      <Version>16.0.467</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.CoreUtility" Version="15.6.27740" />
+    <PackageReference Include="Microsoft.VisualStudio.CoreUtility" Version="16.0.467" />
     <PackageReference Include="Microsoft.VisualStudio.Imaging">
-      <Version>15.7.27703</Version>
+      <Version>16.0.28729</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime">
       <Version>14.3.26930</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Language.StandardClassification">
-      <Version>15.6.27740</Version>
+      <Version>16.0.467</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.OLE.Interop">
       <Version>7.10.6071</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK.EmbedInteropTypes">
-      <Version>15.0.21</Version>
+      <Version>15.0.27</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.15.0">
-      <Version>15.7.27703</Version>
+      <Version>16.0.28729</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Framework">
-      <Version>15.7.27703</Version>
+      <Version>16.0.28729</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Interop">
       <Version>7.10.6072</Version>
@@ -128,10 +134,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.9.0">
       <Version>9.0.30730</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Text.Data" Version="15.6.27740" />
-    <PackageReference Include="Microsoft.VisualStudio.Text.Logic" Version="15.6.27740" />
-    <PackageReference Include="Microsoft.VisualStudio.Text.UI" Version="15.6.27740" />
-    <PackageReference Include="Microsoft.VisualStudio.Text.UI.Wpf" Version="15.6.27740" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.Data" Version="16.0.467" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.Logic" Version="16.0.467" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.UI" Version="16.0.467" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.UI.Wpf" Version="16.0.467" />
     <PackageReference Include="Microsoft.VisualStudio.TextManager.Interop">
       <Version>7.10.6071</Version>
     </PackageReference>
@@ -139,16 +145,18 @@
       <Version>8.0.50728</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Threading">
-      <Version>15.7.23</Version>
+      <Version>16.0.102</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Utilities">
-      <Version>15.7.27703</Version>
+      <Version>16.0.28729</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Validation">
       <Version>15.3.58</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>15.8.3247</Version>
+      <Version>16.1.1079</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SharpSerializer">
       <Version>3.0.1</Version>
@@ -168,11 +176,11 @@
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />
-    <PackageReference Include="System.Reflection.Metadata" Version="1.6.0" />
+    <PackageReference Include="System.Reflection.Metadata" Version="1.7.0-preview3.19128.7" />
     <PackageReference Include="System.Reflection.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
     <PackageReference Include="System.Runtime.Handles" Version="4.3.0" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Numerics" Version="4.3.0" />
@@ -181,7 +189,7 @@
     <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Include="System.Text.Encoding" Version="4.3.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.6.0-preview3.19128.7" />
     <PackageReference Include="System.Text.Encoding.Extensions" Version="4.3.0" />
     <PackageReference Include="System.Threading" Version="4.3.0" />
     <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
@@ -199,6 +207,11 @@
     <Compile Include="Misc\CSharpExtensions.cs" />
     <Compile Include="Core\SynthexerEditorFormats.cs" />
     <Compile Include="Misc\Extensions.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\OptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -242,6 +255,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingsItemControl.resx">
       <DependentUpon>SettingsItemControl.cs</DependentUpon>
     </EmbeddedResource>

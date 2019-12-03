@@ -5,9 +5,6 @@ namespace Synthexer.Misc
 {
 	public static class CSharpExtensions
 	{
-		public static SyntaxKind CSharpKind(this SyntaxNode node)
-		{
-			return node.Kind();
-		}
+		public static SyntaxKind CSharpKind(this SyntaxNode node) => node.Kind();
 	}
 }

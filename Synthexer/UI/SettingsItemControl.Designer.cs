@@ -38,6 +38,7 @@
 			this._colorDialog = new System.Windows.Forms.ColorDialog();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this._lblClassificationId = new System.Windows.Forms.Label();
+			this._chkIsActive = new System.Windows.Forms.CheckBox();
 			this.separator1 = new Synthexer.UI.Separator();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
@@ -85,7 +86,7 @@
 			// 
 			this._pnlForgroundColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._pnlForgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this._pnlForgroundColor.Location = new System.Drawing.Point(140, 10);
+			this._pnlForgroundColor.Location = new System.Drawing.Point(194, 10);
 			this._pnlForgroundColor.Name = "_pnlForgroundColor";
 			this._pnlForgroundColor.Size = new System.Drawing.Size(25, 18);
 			this._pnlForgroundColor.TabIndex = 4;
@@ -96,28 +97,28 @@
 			this._lblForgroundColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._lblForgroundColor.AutoSize = true;
 			this._lblForgroundColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this._lblForgroundColor.Location = new System.Drawing.Point(171, 12);
+			this._lblForgroundColor.Location = new System.Drawing.Point(225, 11);
 			this._lblForgroundColor.Name = "_lblForgroundColor";
-			this._lblForgroundColor.Size = new System.Drawing.Size(82, 13);
+			this._lblForgroundColor.Size = new System.Drawing.Size(55, 13);
 			this._lblForgroundColor.TabIndex = 5;
-			this._lblForgroundColor.Text = "Forground Color";
+			this._lblForgroundColor.Text = "Forground";
 			// 
 			// _lblBackgroundColor
 			// 
 			this._lblBackgroundColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._lblBackgroundColor.AutoSize = true;
 			this._lblBackgroundColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this._lblBackgroundColor.Location = new System.Drawing.Point(290, 12);
+			this._lblBackgroundColor.Location = new System.Drawing.Point(317, 12);
 			this._lblBackgroundColor.Name = "_lblBackgroundColor";
-			this._lblBackgroundColor.Size = new System.Drawing.Size(92, 13);
+			this._lblBackgroundColor.Size = new System.Drawing.Size(65, 13);
 			this._lblBackgroundColor.TabIndex = 7;
-			this._lblBackgroundColor.Text = "Background Color";
+			this._lblBackgroundColor.Text = "Background";
 			// 
 			// _pnlBackgroundColor
 			// 
 			this._pnlBackgroundColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._pnlBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this._pnlBackgroundColor.Location = new System.Drawing.Point(259, 10);
+			this._pnlBackgroundColor.Location = new System.Drawing.Point(286, 10);
 			this._pnlBackgroundColor.Name = "_pnlBackgroundColor";
 			this._pnlBackgroundColor.Size = new System.Drawing.Size(25, 18);
 			this._pnlBackgroundColor.TabIndex = 6;
@@ -127,6 +128,7 @@
 			// 
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this._chkIsActive);
 			this.groupBox1.Controls.Add(this._lblClassificationId);
 			this.groupBox1.Controls.Add(this.separator1);
 			this.groupBox1.Controls.Add(this._chkIsItalic);
@@ -147,11 +149,22 @@
 			// 
 			this._lblClassificationId.AutoSize = true;
 			this._lblClassificationId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this._lblClassificationId.Location = new System.Drawing.Point(6, 12);
+			this._lblClassificationId.Location = new System.Drawing.Point(24, 12);
 			this._lblClassificationId.Name = "_lblClassificationId";
 			this._lblClassificationId.Size = new System.Drawing.Size(80, 13);
 			this._lblClassificationId.TabIndex = 9;
 			this._lblClassificationId.Text = "ClassificationId:";
+			// 
+			// _chkIsActive
+			// 
+			this._chkIsActive.AutoSize = true;
+			this._chkIsActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this._chkIsActive.Location = new System.Drawing.Point(3, 12);
+			this._chkIsActive.Name = "_chkIsActive";
+			this._chkIsActive.Size = new System.Drawing.Size(15, 14);
+			this._chkIsActive.TabIndex = 10;
+			this._chkIsActive.UseVisualStyleBackColor = true;
+			this._chkIsActive.CheckedChanged += new System.EventHandler(this.On_chkIsActive_CheckedChanged);
 			// 
 			// separator1
 			// 
@@ -188,5 +201,6 @@
 		private System.Windows.Forms.ColorDialog _colorDialog;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label _lblClassificationId;
+		private System.Windows.Forms.CheckBox _chkIsActive;
 	}
 }

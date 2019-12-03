@@ -6,31 +6,70 @@ using Microsoft.VisualStudio.Utilities;
 namespace Synthexer.Core
 {
 
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.Namespace)]
+	// [Name(SynthexerConstants.Namespace)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class NamespaceFormat : ClassificationFormatDefinition
+	// {
+	// 	public NamespaceFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Namespace).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
+
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.Class)]
+	// [Name(SynthexerConstants.Class)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class ClassFormat : ClassificationFormatDefinition
+	// {
+	// 	public ClassFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Class).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
+
 	[Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.Namespace)]
-	[Name(SynthexerConstants.Namespace)]
+	[ClassificationType(ClassificationTypeNames = SynthexerConstants.StaticClass)]
+	[Name(SynthexerConstants.StaticClass)]
 	[UserVisible(false)]
 	[Order(After = Priority.High)]
-	internal sealed class NamespaceFormat : ClassificationFormatDefinition
+	internal sealed class StaticClassFormat : ClassificationFormatDefinition
 	{
-		public NamespaceFormat()
+		public StaticClassFormat()
 		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Namespace).Select(i => i.info.description).FirstOrDefault();
+			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.StaticClass).Select(i => i.info.description).FirstOrDefault();
 		}
 	}
 
-	[Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.Field)]
-	[Name(SynthexerConstants.Field)]
-	[UserVisible(false)]
-	[Order(After = Priority.High)]
-	internal sealed class FieldFormat : ClassificationFormatDefinition
-	{
-		public FieldFormat()
-		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Field).Select(i => i.info.description).FirstOrDefault();
-		}
-	}
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.Struct)]
+	// [Name(SynthexerConstants.Struct)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class StructFormat : ClassificationFormatDefinition
+	// {
+	// 	public StructFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Struct).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
+	//
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.Field)]
+	// [Name(SynthexerConstants.Field)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class FieldFormat : ClassificationFormatDefinition
+	// {
+	// 	public FieldFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Field).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
 
 	[Export(typeof(EditorFormatDefinition))]
 	[ClassificationType(ClassificationTypeNames = SynthexerConstants.Property)]
@@ -44,7 +83,7 @@ namespace Synthexer.Core
 			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Property).Select(i => i.info.description).FirstOrDefault();
 		}
 	}
-
+	//
 	[Export(typeof(EditorFormatDefinition))]
 	[ClassificationType(ClassificationTypeNames = SynthexerConstants.Constant)]
 	[Name(SynthexerConstants.Constant)]
@@ -58,18 +97,18 @@ namespace Synthexer.Core
 		}
 	}
 
-	[Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.EnumValue)]
-	[Name(SynthexerConstants.EnumValue)]
-	[UserVisible(false)]
-	[Order(After = Priority.High)]
-	internal sealed class EnumValueFormat : ClassificationFormatDefinition
-	{
-		public EnumValueFormat()
-		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.EnumValue).Select(i => i.info.description).FirstOrDefault();
-		}
-	}
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.EnumValue)]
+	// [Name(SynthexerConstants.EnumValue)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class EnumValueFormat : ClassificationFormatDefinition
+	// {
+	// 	public EnumValueFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.EnumValue).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
 
     [Export(typeof(EditorFormatDefinition))]
     [ClassificationType(ClassificationTypeNames = SynthexerConstants.Attribute)]
@@ -84,18 +123,18 @@ namespace Synthexer.Core
         }
     }
 
-    [Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.Method)]
-	[Name(SynthexerConstants.Method)]
-	[UserVisible(false)]
-	[Order(After = Priority.High)]
-	internal sealed class MethodFormat : ClassificationFormatDefinition
-	{
-		public MethodFormat()
-		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Method).Select(i => i.info.description).FirstOrDefault();
-		}
-	}
+ //    [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.Method)]
+	// [Name(SynthexerConstants.Method)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class MethodFormat : ClassificationFormatDefinition
+	// {
+	// 	public MethodFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Method).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
 
 	[Export(typeof(EditorFormatDefinition))]
 	[ClassificationType(ClassificationTypeNames = SynthexerConstants.StaticMethod)]
@@ -110,18 +149,18 @@ namespace Synthexer.Core
 		}
 	}
 
-	[Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.ExtensionMethod)]
-	[Name(SynthexerConstants.ExtensionMethod)]
-	[UserVisible(false)]
-	[Order(After = Priority.High)]
-	internal sealed class ExtensionMethodFormat : ClassificationFormatDefinition
-	{
-		public ExtensionMethodFormat()
-		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.ExtensionMethod).Select(i => i.info.description).FirstOrDefault();
-		}
-	}
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.ExtensionMethod)]
+	// [Name(SynthexerConstants.ExtensionMethod)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class ExtensionMethodFormat : ClassificationFormatDefinition
+	// {
+	// 	public ExtensionMethodFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.ExtensionMethod).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
 	
 	[Export(typeof(EditorFormatDefinition))]
 	[ClassificationType(ClassificationTypeNames = SynthexerConstants.LocalFunction)]
@@ -136,42 +175,42 @@ namespace Synthexer.Core
 		}
 	}
 
-	[Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.Parameter)]
-	[Name(SynthexerConstants.Parameter)]
-	[UserVisible(false)]
-	[Order(After = Priority.High)]
-	internal sealed class ParameterFormat : ClassificationFormatDefinition
-	{
-		public ParameterFormat()
-		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Parameter).Select(i => i.info.description).FirstOrDefault();
-		}
-	}
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.Parameter)]
+	// [Name(SynthexerConstants.Parameter)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class ParameterFormat : ClassificationFormatDefinition
+	// {
+	// 	public ParameterFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Parameter).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
 
-	[Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.LocalVariable)]
-	[Name(SynthexerConstants.LocalVariable)]
-	[UserVisible(false)]
-	[Order(After = Priority.High)]
-	internal sealed class LocalFormat : ClassificationFormatDefinition
-	{
-		public LocalFormat()
-		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.LocalVariable).Select(i => i.info.description).FirstOrDefault();
-		}
-	}
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.LocalVariable)]
+	// [Name(SynthexerConstants.LocalVariable)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class LocalFormat : ClassificationFormatDefinition
+	// {
+	// 	public LocalFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.LocalVariable).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
 
-	[Export(typeof(EditorFormatDefinition))]
-	[ClassificationType(ClassificationTypeNames = SynthexerConstants.Event)]
-	[Name(SynthexerConstants.Event)]
-	[UserVisible(false)]
-	[Order(After = Priority.High)]
-	internal sealed class EventFormat : ClassificationFormatDefinition
-	{
-		public EventFormat()
-		{
-			DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Event).Select(i => i.info.description).FirstOrDefault();
-		}
-	}
+	// [Export(typeof(EditorFormatDefinition))]
+	// [ClassificationType(ClassificationTypeNames = SynthexerConstants.Event)]
+	// [Name(SynthexerConstants.Event)]
+	// [UserVisible(false)]
+	// [Order(After = Priority.High)]
+	// internal sealed class EventFormat : ClassificationFormatDefinition
+	// {
+	// 	public EventFormat()
+	// 	{
+	// 		DisplayName = SynthexerConstants.All.Where(i => i.classificationId == SynthexerConstants.Event).Select(i => i.info.description).FirstOrDefault();
+	// 	}
+	// }
 }

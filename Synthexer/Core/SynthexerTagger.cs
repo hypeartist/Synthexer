@@ -22,6 +22,7 @@ namespace Synthexer.Core
 		private readonly IClassificationType _namespaceType;
 		private readonly IClassificationType _interfaceType;
 		private readonly IClassificationType _classType;
+		private readonly IClassificationType _staticClassType;
 		private readonly IClassificationType _structType;
 		private readonly IClassificationType _fieldType;
 		private readonly IClassificationType _propertyType;
@@ -49,6 +50,7 @@ namespace Synthexer.Core
 			_namespaceType = registry.GetClassificationType(SynthexerConstants.Namespace);
 			_interfaceType = registry.GetClassificationType(SynthexerConstants.Interface);
 			_classType = registry.GetClassificationType(SynthexerConstants.Class);
+			_staticClassType = registry.GetClassificationType(SynthexerConstants.StaticClass);
 			_structType = registry.GetClassificationType(SynthexerConstants.Struct);
 			_fieldType = registry.GetClassificationType(SynthexerConstants.Field);
 			_propertyType = registry.GetClassificationType(SynthexerConstants.Property);
@@ -145,7 +147,10 @@ namespace Synthexer.Core
 					continue;
 				}
 				if (symbol == null) continue;
-
+				if (symbol.Name == "aaa")
+				{
+					var s = 0;
+				}
 				switch (symbol.Kind)
 				{
                     case SymbolKind.Field:
@@ -164,18 +169,13 @@ namespace Synthexer.Core
 
 						break;
 					case SymbolKind.Method:
-                        if (span.ClassificationType == ClassificationTypeNames.ClassName)
-                        {
-                            yield return span.TextSpan.ToTagSpan(snapshot, _attributeType);
-                            break;
-                        }
 						var methodSymbol = (IMethodSymbol) symbol;
                         if (methodSymbol.IsExtensionMethod)
                         {
                             yield return span.TextSpan.ToTagSpan(snapshot, _extensionMethodType);
                             break;
                         }
-                        if (methodSymbol.IsStatic)
+						if (methodSymbol.IsStatic)
                         {
                             yield return span.TextSpan.ToTagSpan(snapshot, _staticMethodType);
                             break;
@@ -183,14 +183,17 @@ namespace Synthexer.Core
                         switch (methodSymbol.MethodKind)
 						{
 							case MethodKind.AnonymousFunction:
-								break;
 							case MethodKind.Ordinary:
                                 yield return span.TextSpan.ToTagSpan(snapshot, _methodType);
 								break;
 							case MethodKind.Constructor:
 							case MethodKind.Destructor:
 							case MethodKind.StaticConstructor:
-								if (methodSymbol.ContainingType.IsReferenceType)
+								if (methodSymbol.ContainingType.IsAttribute())
+								{
+									yield return span.TextSpan.ToTagSpan(snapshot, _attributeType);
+								}
+								else if (methodSymbol.ContainingType.IsReferenceType)
 								{
 									yield return span.TextSpan.ToTagSpan(snapshot, _classType);
 								}
@@ -229,6 +232,12 @@ namespace Synthexer.Core
 						switch (span.ClassificationType)
 						{
                             case SynthexerConstants.Class:
+								var classSymbol = (INamedTypeSymbol)symbol;
+								if (classSymbol.IsStatic)
+								{
+									yield return span.TextSpan.ToTagSpan(snapshot, _staticClassType);
+									break;
+								}
 								yield return span.TextSpan.ToTagSpan(snapshot, _classType);
 								break;
 							case SynthexerConstants.Struct:
@@ -259,9 +268,10 @@ namespace Synthexer.Core
 			var comparer = StringComparer.InvariantCultureIgnoreCase;
 			var classifiedSpans = spans.SelectMany(span =>
 			{
+				
 				var textSpan = TextSpan.FromBounds(span.Start, span.End);
 				return Classifier.GetClassifiedSpans(model, textSpan, workspace);
-			});
+			}).ToList();
             // ReSharper disable once PossibleUnintendedLinearSearchInSet
             return classifiedSpans.Where(span => span.ClassificationType == ClassificationTypeNames.Identifier || SynthexerConstants.All.Select(a => a.classificationId).Contains(span.ClassificationType, comparer));
         }

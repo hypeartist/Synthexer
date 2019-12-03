@@ -18,6 +18,7 @@ namespace Synthexer.Settings
 			[nameof(IsItalic)] = (o, p) => p.SetItalic(o.IsItalic),
 			[nameof(IsBold)] = (o, p) => p.SetBold(o.IsBold),
 			[nameof(IsUnderline)] = (o, p) => o.IsUnderline ? p.SetTextDecorations(TextDecorations.Underline) : p.ClearTextDecorations(),
+			[nameof(IsActive)] = (o, p) => p
 		};
 
 		internal SettingsItem((string classificationId, string displayName) i)
@@ -31,6 +32,7 @@ namespace Synthexer.Settings
 		private bool _isItalic;
 		private bool _isBold;
 		private bool _isUnderline;
+		private bool _isActive;
 
 		public string ClassificationId { get; }
 
@@ -66,6 +68,12 @@ namespace Synthexer.Settings
 			set => Set(ref _isUnderline, value);
 		}
 
+		public bool IsActive
+		{
+			get => _isActive;
+			set => Set(ref _isActive, value);
+		}
+
 		internal TextFormattingRunProperties UpdateProperties(TextFormattingRunProperties p)
 		{
 			p = FormatPropertySetters[nameof(BackgroundColor)](this, p);
@@ -73,6 +81,7 @@ namespace Synthexer.Settings
 			p = FormatPropertySetters[nameof(IsBold)](this, p);
 			p = FormatPropertySetters[nameof(IsItalic)](this, p);
 			p = FormatPropertySetters[nameof(IsUnderline)](this, p);
+			p = FormatPropertySetters[nameof(IsActive)](this, p);
 			return p;
 		}
 

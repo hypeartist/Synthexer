@@ -18,12 +18,7 @@ namespace Synthexer.UI
 		public SettingsItemControl(SettingsItem item) : this()
 		{
 			_item = item;
-			_lblClassificationId.Text = $@"{item.DisplayName}:";
-			_pnlForgroundColor.BackColor = Color.FromArgb((int) item.ForegroundColor.ToArgb());
-			_pnlBackgroundColor.BackColor = Color.FromArgb((int) item.BackgroundColor.ToArgb());
-			_chkIsBold.Checked = item.IsBold;
-			_chkIsItalic.Checked = item.IsItalic;
-			_chkIsUnderline.Checked = item.IsUnderline;
+			UpdateState(_chkIsActive.Checked = item.IsActive);
 		}
 
 		private void On_pnlForgroundColor_Click(object sender, EventArgs e)
@@ -57,6 +52,44 @@ namespace Synthexer.UI
 		private void On_chkIsUnderline_CheckedChanged(object sender, EventArgs e)
 		{
 			_item.IsUnderline = _chkIsUnderline.Checked;
+		}
+
+		private void On_chkIsActive_CheckedChanged(object sender, EventArgs e)
+		{
+			UpdateState(_item.IsActive = _chkIsActive.Checked);
+		}
+
+		private void UpdateState(bool isActive)
+		{
+			_lblClassificationId.Text = $@"{_item.DisplayName}:";
+
+			if (!isActive)
+			{
+				_lblClassificationId.Enabled = false;
+				_lblForgroundColor.Enabled = false;
+				_lblBackgroundColor.Enabled = false;
+				_pnlForgroundColor.Enabled = false;
+				_pnlBackgroundColor.Enabled = false;
+				_chkIsBold.Enabled = false;
+				_chkIsItalic.Enabled = false;
+				_chkIsUnderline.Enabled = false;
+				return;
+			}
+
+			_lblClassificationId.Enabled = true;
+			_lblForgroundColor.Enabled = true;
+			_lblBackgroundColor.Enabled = true;
+			_pnlForgroundColor.Enabled = true;
+			_pnlBackgroundColor.Enabled = true;
+			_chkIsBold.Enabled = true;
+			_chkIsItalic.Enabled = true;
+			_chkIsUnderline.Enabled = true;
+
+			_pnlForgroundColor.BackColor = Color.FromArgb((int) _item.ForegroundColor.ToArgb());
+			_pnlBackgroundColor.BackColor = Color.FromArgb((int) _item.BackgroundColor.ToArgb());
+			_chkIsBold.Checked = _item.IsBold;
+			_chkIsItalic.Checked = _item.IsItalic;
+			_chkIsUnderline.Checked = _item.IsUnderline;
 		}
 	}
 }

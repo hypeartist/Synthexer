@@ -113,6 +113,7 @@ namespace Synthexer.Settings
 				item.IsBold = kv.Value.IsBold;
 				item.IsItalic = kv.Value.IsItalic;
 				item.IsUnderline = kv.Value.IsUnderline;
+				item.IsActive = kv.Value.IsActive;
 			}
 		}
 

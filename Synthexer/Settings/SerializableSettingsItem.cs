@@ -17,6 +17,7 @@ namespace Synthexer.Settings
 			IsBold = item.IsBold;
 			IsItalic = item.IsItalic;
 			IsUnderline = item.IsUnderline;
+			IsActive = item.IsActive;
 		}
 
 		public Color ForegroundColor { get; set; }
@@ -28,5 +29,7 @@ namespace Synthexer.Settings
 		public bool IsBold { get; set; }
 
 		public bool IsUnderline { get; set; }
+
+		public bool IsActive { get; set; }
 	}
 }
