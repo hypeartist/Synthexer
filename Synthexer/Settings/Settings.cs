@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -31,7 +30,7 @@ namespace Synthexer.Settings
 			var shellSettingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
 			_writableSettingsStore = shellSettingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
 
-			_items = SynthexerConstants.All.Select(i => new KeyValuePair<string, SettingsItem>(i.classificationId, new SettingsItem((i.classificationId, i.info.displayName)))).ToDictionary(kv => kv.Key, kv => kv.Value);
+			_items = ClassificationTypeNamesEx.All().OrderBy(i=>i.displayName).Select(i => new KeyValuePair<string, SettingsItem>(i.classification, new SettingsItem((i.classification, i.displayName)))).ToDictionary(kv => kv.Key, kv => kv.Value);
 			foreach (var kv in _items)
 			{
 				kv.Value.OptionsChanged += OnItemOptionsChanged;
@@ -81,9 +80,9 @@ namespace Synthexer.Settings
 				var xml = _writableSettingsStore.GetMemoryStream(collectionName, nameof(Items));
 				FromSerializable((serializer.Deserialize(xml) as SerializableSettings));
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				Debug.Fail(ex.Message);
+				//Debug.Fail(ex.Message);
 			}
 		}
 
@@ -92,10 +91,8 @@ namespace Synthexer.Settings
 			var settings = new SharpSerializerBinarySettings(BinarySerializationMode.SizeOptimized) { IncludeAssemblyVersionInTypeName = false, IncludeCultureInTypeName = false, IncludePublicKeyTokenInTypeName = false };
 			var serializer = new SharpSerializer(settings);
 			var data = File.ReadAllBytes(fileName);
-			using (var m = new MemoryStream(data))
-			{
-				FromSerializable((serializer.Deserialize(m) as SerializableSettings));
-			}
+			using var m = new MemoryStream(data);
+			FromSerializable((serializer.Deserialize(m) as SerializableSettings));
 		}
 
 		private SerializableSettings ToSerializable()
@@ -107,6 +104,7 @@ namespace Synthexer.Settings
 		{
 			foreach (var kv in ss.Items)
 			{
+				if(!_items.ContainsKey(kv.Key)) continue;
 				var item = _items[kv.Key];
 				item.ForegroundColor = kv.Value.ForegroundColor;
 				item.BackgroundColor = kv.Value.BackgroundColor;
@@ -129,11 +127,9 @@ namespace Synthexer.Settings
 
 				var settings = new SharpSerializerBinarySettings(BinarySerializationMode.SizeOptimized) { IncludeAssemblyVersionInTypeName = false, IncludeCultureInTypeName = false, IncludePublicKeyTokenInTypeName = false };
 				var serializer = new SharpSerializer(settings);
-				using (var m = new MemoryStream())
-				{
-					serializer.Serialize(ToSerializable(), m);
-					_writableSettingsStore.SetMemoryStream(collectionName, nameof(Items), m);
-				}
+				using var m = new MemoryStream();
+				serializer.Serialize(ToSerializable(), m);
+				_writableSettingsStore.SetMemoryStream(collectionName, nameof(Items), m);
 			}
 			catch (Exception)
 			{
@@ -145,11 +141,9 @@ namespace Synthexer.Settings
 		{
 			var settings = new SharpSerializerBinarySettings(BinarySerializationMode.SizeOptimized) { IncludeAssemblyVersionInTypeName = false, IncludeCultureInTypeName = false, IncludePublicKeyTokenInTypeName = false };
 			var serializer = new SharpSerializer(settings);
-			using (var m = new MemoryStream())
-			{
-				serializer.Serialize(ToSerializable(), m);
-				File.WriteAllBytes(fileName, m.GetBuffer());
-			}
+			using var m = new MemoryStream();
+			serializer.Serialize(ToSerializable(), m);
+			File.WriteAllBytes(fileName, m.GetBuffer());
 		}
 
 		private void OnOptionsChanged(SettingsChangedEventArgs e)

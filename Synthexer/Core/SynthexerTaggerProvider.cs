@@ -59,6 +59,7 @@ namespace Synthexer.Core
 			if(!item.IsActive) return;
 
 			var classificationType = ClassificationRegistry.GetClassificationType(item.ClassificationId);
+			if(classificationType == null) return;
 			var oldFormatting = formatMap.GetTextProperties(classificationType);
 			var foregroundBrush = item.ForegroundColor == Colors.Transparent ? null : new SolidColorBrush(item.ForegroundColor);
 			var backgroundBrush = item.BackgroundColor == Colors.Transparent ? null : new SolidColorBrush(item.BackgroundColor);
@@ -66,6 +67,7 @@ namespace Synthexer.Core
 
 			formatting = Settings.Settings.Instance.UpdateProperties(item, formatting);
             var identifierPosition = formatMap.CurrentPriorityOrder.IndexOf(classificationType);
+			if(identifierPosition < 0) return;
             var afterIdentifierClassification = formatMap.CurrentPriorityOrder[identifierPosition/* + 1*/];
             // formatMap.AddExplicitTextProperties(classificationType, formatting, afterIdentifierClassification);
             formatMap.AddExplicitTextProperties(classificationType, formatting, afterIdentifierClassification);

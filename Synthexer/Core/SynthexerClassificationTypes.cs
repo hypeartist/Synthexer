@@ -1,75 +1,170 @@
 ﻿using System.ComponentModel.Composition;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
 namespace Synthexer.Core
 {
+	[SuppressMessage("ReSharper", "UnassignedField.Global")]
 	internal static class SynthexerClassificationTypes
 	{
 #pragma warning disable CS0649
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Namespace)]
-		internal static ClassificationTypeDefinition NamespaceType;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Class)]
-		internal static ClassificationTypeDefinition ClassType;
+		[Name(ClassificationTypeNamesEx.Comment)]
+		internal static ClassificationTypeDefinition Comment;
+
+		// [Export(typeof(ClassificationTypeDefinition))]
+		// [Name(ClassificationTypeNamesEx.ExcludedCode)]
+		// internal static ClassificationTypeDefinition ExcludedCode;
+
+		// [Export(typeof(ClassificationTypeDefinition))]
+		// [Name(ClassificationTypeNamesEx.Identifier)]
+		// internal static ClassificationTypeDefinition Identifier;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.StaticClass)]
-		internal static ClassificationTypeDefinition StaticClassType;
+		[Name(ClassificationTypeNamesEx.Keyword)]
+		internal static ClassificationTypeDefinition Keyword;
+
+		// [Export(typeof(ClassificationTypeDefinition))]
+		// [Name(ClassificationTypeNamesEx.ControlKeyword)]
+		// internal static ClassificationTypeDefinition ControlKeyword;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Struct)]
-		internal static ClassificationTypeDefinition StructType;
+		[Name(ClassificationTypeNamesEx.NumericLiteral)]
+		internal static ClassificationTypeDefinition NumericLiteral;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Field)]
-		internal static ClassificationTypeDefinition FieldType;
+		[Name(ClassificationTypeNamesEx.Operator)]
+		internal static ClassificationTypeDefinition Operator;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Property)]
-		internal static ClassificationTypeDefinition PropertyType;
+		[Name(ClassificationTypeNamesEx.OperatorOverloaded)]
+		internal static ClassificationTypeDefinition OperatorOverloaded;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Constant)]
-		internal static ClassificationTypeDefinition ConstantType;
+		[Name(ClassificationTypeNamesEx.PreprocessorKeyword)]
+		internal static ClassificationTypeDefinition PreprocessorDirectiveType;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.EnumValue)]
-		internal static ClassificationTypeDefinition EnumFieldType;
+		[Name(ClassificationTypeNamesEx.StringLiteral)]
+		internal static ClassificationTypeDefinition StringLiteral;
+		//
+		// [Export(typeof(ClassificationTypeDefinition))]
+		// [Name(ClassificationTypeNamesEx.WhiteSpace)]
+		// internal static ClassificationTypeDefinition WhiteSpace;
+		//
+		// [Export(typeof(ClassificationTypeDefinition))]
+		// [Name(ClassificationTypeNamesEx.Text)]
+		// internal static ClassificationTypeDefinition Text;
+		//
+		// [Export(typeof(ClassificationTypeDefinition))]
+		// [Name(ClassificationTypeNamesEx.StaticSymbol)]
+		// internal static ClassificationTypeDefinition StaticSymbol;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Attribute)]
-		internal static ClassificationTypeDefinition AttributeType;
+		[Name(ClassificationTypeNamesEx.PreprocessorText)]
+		internal static ClassificationTypeDefinition PreprocessorText;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Method)]
-		internal static ClassificationTypeDefinition MethodType;
+		[Name(ClassificationTypeNamesEx.Punctuation)]
+		internal static ClassificationTypeDefinition Punctuation;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.StaticMethod)]
-		internal static ClassificationTypeDefinition StaticMethodType;
+		[Name(ClassificationTypeNamesEx.VerbatimStringLiteral)]
+		internal static ClassificationTypeDefinition VerbatimStringLiteral;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.ExtensionMethod)]
-		internal static ClassificationTypeDefinition ExtensionMethodType;
+		[Name(ClassificationTypeNamesEx.StringEscapeCharacter)]
+		internal static ClassificationTypeDefinition StringEscapeCharacter;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.LocalFunction)]
-		internal static ClassificationTypeDefinition LocalFunctionType;
+		[Name(ClassificationTypeNamesEx.ClassName)]
+		internal static ClassificationTypeDefinition ClassName;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Parameter)]
-		internal static ClassificationTypeDefinition ParameterType;
+		[Name(ClassificationTypeNamesEx.DelegateName)]
+		internal static ClassificationTypeDefinition DelegateName;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.LocalVariable)]
-		internal static ClassificationTypeDefinition LocalVariableType;
+		[Name(ClassificationTypeNamesEx.EnumName)]
+		internal static ClassificationTypeDefinition EnumName;
 
 		[Export(typeof(ClassificationTypeDefinition))]
-		[Name(SynthexerConstants.Event)]
-		internal static ClassificationTypeDefinition EventType;
+		[Name(ClassificationTypeNamesEx.InterfaceName)]
+		internal static ClassificationTypeDefinition InterfaceName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.StructName)]
+		internal static ClassificationTypeDefinition StructName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.TypeParameterName)]
+		internal static ClassificationTypeDefinition TypeParameterName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.FieldName)]
+		internal static ClassificationTypeDefinition FieldName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.EnumMemberName)]
+		internal static ClassificationTypeDefinition EnumMemberName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.ConstantName)]
+		internal static ClassificationTypeDefinition ConstantName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.LocalName)]
+		internal static ClassificationTypeDefinition LocalName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.ParameterName)]
+		internal static ClassificationTypeDefinition ParameterName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.MethodName)]
+		internal static ClassificationTypeDefinition MethodName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.ExtensionMethodName)]
+		internal static ClassificationTypeDefinition ExtensionMethodName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.PropertyName)]
+		internal static ClassificationTypeDefinition PropertyName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.EventName)]
+		internal static ClassificationTypeDefinition EventName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.NamespaceName)]
+		internal static ClassificationTypeDefinition NamespaceName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.LabelName)]
+		internal static ClassificationTypeDefinition LabelName;
+
+		// =====================================================================================================================
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.StaticClassName)]
+		internal static ClassificationTypeDefinition StaticClassName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.AttributeName)]
+		internal static ClassificationTypeDefinition AttributeName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.StaticMethodName)]
+		internal static ClassificationTypeDefinition StaticMethodName;
+
+		[Export(typeof(ClassificationTypeDefinition))]
+		[Name(ClassificationTypeNamesEx.LocalFunctionName)]
+		internal static ClassificationTypeDefinition LocalFunctionName;
+
+		
 #pragma warning restore CS0649
 	}
 }

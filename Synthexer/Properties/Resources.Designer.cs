@@ -79,6 +79,15 @@ namespace Synthexer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        internal static string Comment {
+            get {
+                return ResourceManager.GetString("Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Constant.
         /// </summary>
         internal static string Constant {
@@ -151,6 +160,15 @@ namespace Synthexer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keyword.
+        /// </summary>
+        internal static string Keyword {
+            get {
+                return ResourceManager.GetString("Keyword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local function.
         /// </summary>
         internal static string Local_function {
@@ -183,6 +201,15 @@ namespace Synthexer.Properties {
         internal static string Namespace {
             get {
                 return ResourceManager.GetString("Namespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        internal static string Number {
+            get {
+                return ResourceManager.GetString("Number", resourceCulture);
             }
         }
         
@@ -232,6 +259,15 @@ namespace Synthexer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to String.
+        /// </summary>
+        internal static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Struct.
         /// </summary>
         internal static string Struct {
@@ -246,6 +282,15 @@ namespace Synthexer.Properties {
         internal static string Type_parameter {
             get {
                 return ResourceManager.GetString("Type parameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verbatim string.
+        /// </summary>
+        internal static string Verbatim_string {
+            get {
+                return ResourceManager.GetString("Verbatim string", resourceCulture);
             }
         }
     }

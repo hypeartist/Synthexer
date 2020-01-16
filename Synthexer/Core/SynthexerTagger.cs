@@ -6,7 +6,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Classification;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.FindSymbols;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
@@ -19,27 +18,47 @@ namespace Synthexer.Core
 {
 	internal class SynthexerTagger : ITagger<IClassificationTag>
 	{
-		private readonly IClassificationType _namespaceType;
-		private readonly IClassificationType _interfaceType;
-		private readonly IClassificationType _classType;
-		private readonly IClassificationType _staticClassType;
-		private readonly IClassificationType _structType;
-		private readonly IClassificationType _fieldType;
-		private readonly IClassificationType _propertyType;
-		private readonly IClassificationType _constantType;
-		private readonly IClassificationType _enumType;
-		private readonly IClassificationType _enumFieldType;
-        private readonly IClassificationType _attributeType;
-        private readonly IClassificationType _methodType;
-		private readonly IClassificationType _staticMethodType;
-		private readonly IClassificationType _extensionMethodType;
-		private readonly IClassificationType _localFunctionType;
-		private readonly IClassificationType _parameterType;
-		private readonly IClassificationType _typeParameterType;
-		private readonly IClassificationType _localVariableType;
-		private readonly IClassificationType _delegateType;
-		private readonly IClassificationType _eventType;
-		private readonly IClassificationType _preprocessorDirectiveType;
+		private readonly IClassificationType _comment;
+		// private readonly IClassificationType _excludedCode;
+		// private readonly IClassificationType _identifier;
+		private readonly IClassificationType _keyword;
+		// private readonly IClassificationType _controlKeyword;
+		private readonly IClassificationType _numericLiteral;
+		private readonly IClassificationType _operator;
+		private readonly IClassificationType _operatorOverloaded;
+		private readonly IClassificationType _preprocessorKeyword;
+		private readonly IClassificationType _stringLiteral;
+		// private readonly IClassificationType _whiteSpace;
+		// private readonly IClassificationType _text;
+		// private readonly IClassificationType _staticSymbol;
+		private readonly IClassificationType _preprocessorText;
+		private readonly IClassificationType _punctuation;
+		private readonly IClassificationType _verbatimStringLiteral;
+		private readonly IClassificationType _stringEscapeCharacter;
+		private readonly IClassificationType _className;
+		private readonly IClassificationType _delegateName;
+		private readonly IClassificationType _enumName;
+		private readonly IClassificationType _interfaceName;
+		private readonly IClassificationType _structName;
+		private readonly IClassificationType _typeParameterName;
+		private readonly IClassificationType _fieldName;
+		private readonly IClassificationType _enumMemberName;
+		private readonly IClassificationType _constantName;
+		private readonly IClassificationType _localName;
+		private readonly IClassificationType _parameterName;
+		private readonly IClassificationType _methodName;
+		private readonly IClassificationType _extensionMethodName;
+		private readonly IClassificationType _propertyName;
+		private readonly IClassificationType _eventName;
+		private readonly IClassificationType _namespace;
+		private readonly IClassificationType _labelName;
+
+		// =====================================================================================================================
+
+		private readonly IClassificationType _staticClassName;
+        private readonly IClassificationType _attributeName;
+		private readonly IClassificationType _staticMethodName;
+		private readonly IClassificationType _localFunctionName;
 		
 		private readonly ITextBuffer _theBuffer;
 		private Cache _cache;
@@ -47,27 +66,48 @@ namespace Synthexer.Core
 		internal SynthexerTagger(ITextBuffer buffer, IClassificationTypeRegistryService registry)
 		{
 			_theBuffer = buffer;
-			_namespaceType = registry.GetClassificationType(SynthexerConstants.Namespace);
-			_interfaceType = registry.GetClassificationType(SynthexerConstants.Interface);
-			_classType = registry.GetClassificationType(SynthexerConstants.Class);
-			_staticClassType = registry.GetClassificationType(SynthexerConstants.StaticClass);
-			_structType = registry.GetClassificationType(SynthexerConstants.Struct);
-			_fieldType = registry.GetClassificationType(SynthexerConstants.Field);
-			_propertyType = registry.GetClassificationType(SynthexerConstants.Property);
-			_constantType = registry.GetClassificationType(SynthexerConstants.Constant);
-			_enumType = registry.GetClassificationType(SynthexerConstants.Enum);
-			_enumFieldType = registry.GetClassificationType(SynthexerConstants.EnumValue);
-            _attributeType = registry.GetClassificationType(SynthexerConstants.Attribute);
-            _methodType = registry.GetClassificationType(SynthexerConstants.Method);
-			_staticMethodType = registry.GetClassificationType(SynthexerConstants.StaticMethod);
-			_extensionMethodType = registry.GetClassificationType(SynthexerConstants.ExtensionMethod);
-			_localFunctionType = registry.GetClassificationType(SynthexerConstants.LocalFunction);
-			_parameterType = registry.GetClassificationType(SynthexerConstants.Parameter);
-			_typeParameterType = registry.GetClassificationType(SynthexerConstants.TypeParameter);
-			_localVariableType = registry.GetClassificationType(SynthexerConstants.LocalVariable);
-			_delegateType = registry.GetClassificationType(SynthexerConstants.Delegate);
-			_eventType = registry.GetClassificationType(SynthexerConstants.Event);
-			_preprocessorDirectiveType = registry.GetClassificationType(SynthexerConstants.PreprocessorDirective);
+
+			_comment = registry.GetClassificationType(ClassificationTypeNamesEx.Comment);
+			// _excludedCode = registry.GetClassificationType(ClassificationTypeNamesEx.ExcludedCode);
+			// _identifier = registry.GetClassificationType(ClassificationTypeNamesEx.Identifier);
+			_keyword = registry.GetClassificationType(ClassificationTypeNamesEx.Keyword);
+			// _controlKeyword = registry.GetClassificationType(ClassificationTypeNamesEx.ControlKeyword);
+			_numericLiteral = registry.GetClassificationType(ClassificationTypeNamesEx.NumericLiteral);
+			_operator = registry.GetClassificationType(ClassificationTypeNamesEx.Operator);
+			_operatorOverloaded = registry.GetClassificationType(ClassificationTypeNamesEx.OperatorOverloaded);
+			_preprocessorKeyword = registry.GetClassificationType(ClassificationTypeNamesEx.PreprocessorKeyword);
+			_stringLiteral = registry.GetClassificationType(ClassificationTypeNamesEx.StringLiteral);
+			// _whiteSpace = registry.GetClassificationType(ClassificationTypeNamesEx.WhiteSpace);
+			// _text = registry.GetClassificationType(ClassificationTypeNamesEx.Text);
+			// _staticSymbol = registry.GetClassificationType(ClassificationTypeNamesEx.StaticSymbol);
+			_preprocessorText = registry.GetClassificationType(ClassificationTypeNamesEx.PreprocessorText);
+			_punctuation = registry.GetClassificationType(ClassificationTypeNamesEx.Punctuation);
+			_verbatimStringLiteral = registry.GetClassificationType(ClassificationTypeNamesEx.VerbatimStringLiteral);
+			_stringEscapeCharacter = registry.GetClassificationType(ClassificationTypeNamesEx.StringEscapeCharacter);
+			_className = registry.GetClassificationType(ClassificationTypeNamesEx.ClassName);
+			_delegateName = registry.GetClassificationType(ClassificationTypeNamesEx.DelegateName);
+			_enumName = registry.GetClassificationType(ClassificationTypeNamesEx.EnumName);
+			_interfaceName = registry.GetClassificationType(ClassificationTypeNamesEx.InterfaceName);
+			_structName = registry.GetClassificationType(ClassificationTypeNamesEx.StructName);
+			_typeParameterName = registry.GetClassificationType(ClassificationTypeNamesEx.TypeParameterName);
+			_fieldName = registry.GetClassificationType(ClassificationTypeNamesEx.FieldName);
+			_enumMemberName = registry.GetClassificationType(ClassificationTypeNamesEx.EnumMemberName);
+			_constantName = registry.GetClassificationType(ClassificationTypeNamesEx.ConstantName);
+			_localName = registry.GetClassificationType(ClassificationTypeNamesEx.LocalName);
+			_parameterName = registry.GetClassificationType(ClassificationTypeNamesEx.ParameterName);
+			_methodName = registry.GetClassificationType(ClassificationTypeNamesEx.MethodName);
+			_extensionMethodName = registry.GetClassificationType(ClassificationTypeNamesEx.ExtensionMethodName);
+			_propertyName = registry.GetClassificationType(ClassificationTypeNamesEx.PropertyName);
+			_eventName = registry.GetClassificationType(ClassificationTypeNamesEx.EventName);
+			_namespace = registry.GetClassificationType(ClassificationTypeNamesEx.NamespaceName);
+			_labelName = registry.GetClassificationType(ClassificationTypeNamesEx.LabelName);
+
+			// =====================================================================================================================
+
+			_staticClassName = registry.GetClassificationType(ClassificationTypeNamesEx.StaticClassName);
+            _attributeName = registry.GetClassificationType(ClassificationTypeNamesEx.AttributeName);
+			_staticMethodName = registry.GetClassificationType(ClassificationTypeNamesEx.StaticMethodName);
+			_localFunctionName = registry.GetClassificationType(ClassificationTypeNamesEx.LocalFunctionName);
 		}
 #pragma warning disable CS0067
 		public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
@@ -120,7 +160,7 @@ namespace Synthexer.Core
             public bool HasPreprocessorDirective { get; private set; }
         }
 
-        private IEnumerable<ITagSpan<IClassificationTag>> GetTagsImpl(Cache doc, NormalizedSnapshotSpanCollection spans)
+		private IEnumerable<ITagSpan<IClassificationTag>> GetTagsImpl(Cache doc, NormalizedSnapshotSpanCollection spans)
 		{			
 			var snapshot = spans[0].Snapshot;
 
@@ -128,131 +168,164 @@ namespace Synthexer.Core
             var isInsidePreprocessorDirective = false;
             foreach (var span in classifiedSpans)
             {
-                var node = GetExpression(doc.SyntaxRoot.FindNode(span.TextSpan));
+	            if (span.IsOfType(ClassificationTypeNamesEx.Keyword))
+	            {
+					yield return span.TextSpan.ToTagSpan(snapshot, _keyword);
+					continue;
+				}
+	            if (span.IsOfType(ClassificationTypeNamesEx.NumericLiteral))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _numericLiteral);
+		            continue;
+	            }
+	            if (span.IsOfType(ClassificationTypeNamesEx.StringLiteral))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _stringLiteral);
+		            continue;
+	            }
+	            if (span.IsOfType(ClassificationTypeNamesEx.VerbatimStringLiteral))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _verbatimStringLiteral);
+		            continue;
+	            }
+	            if (span.IsOfType(ClassificationTypeNamesEx.StringEscapeCharacter))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _stringEscapeCharacter);
+		            continue;
+	            }
+	            if (span.IsOfType(ClassificationTypeNamesEx.Operator))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _operator);
+		            continue;
+	            }
+	            if (span.IsOfType(ClassificationTypeNamesEx.StringLiteral))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _operatorOverloaded);
+		            continue;
+	            }
+	            if (span.IsOfType(ClassificationTypeNamesEx.Punctuation))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _punctuation);
+		            continue;
+	            }
+				if (span.IsOfType(ClassificationTypeNamesEx.Comment))
+	            {
+		            yield return span.TextSpan.ToTagSpan(snapshot, _comment);
+		            continue;
+	            }
+
+				var node = GetExpression(doc.SyntaxRoot.FindNode(span.TextSpan));
                 var symbol = doc.SemanticModel.GetSymbolInfo(node).Symbol ?? doc.SemanticModel.GetDeclaredSymbol(node);
-                if (span.ClassificationType == ClassificationTypeNames.PreprocessorKeyword)
+                if (span.IsOfType(ClassificationTypeNamesEx.PreprocessorKeyword))
                 {
                     var triviaFinder = new PreprocessorTriviaFinder();
                     triviaFinder.Visit(node);
                     if (triviaFinder.HasPreprocessorDirective)
                     {
                         isInsidePreprocessorDirective = true;
-                        yield return span.TextSpan.ToTagSpan(snapshot, _preprocessorDirectiveType);
+                        yield return span.TextSpan.ToTagSpan(snapshot, _preprocessorKeyword);
                         continue;
                     }
                 }
-				if (isInsidePreprocessorDirective)
+                if (isInsidePreprocessorDirective)
 				{
-					yield return span.TextSpan.ToTagSpan(snapshot, _preprocessorDirectiveType);
+					yield return span.TextSpan.ToTagSpan(snapshot, _preprocessorKeyword);
 					continue;
 				}
-				if (symbol == null) continue;
-				if (symbol.Name == "aaa")
-				{
-					var s = 0;
+
+                if (symbol == null)
+                {
+	                yield return span switch
+	                {
+		                _ when span.IsOfType(ClassificationTypeNamesEx.ClassName) => span.TextSpan.ToTagSpan(snapshot, _className),
+		                _ when span.IsOfType(ClassificationTypeNamesEx.InterfaceName) => span.TextSpan.ToTagSpan(snapshot, _interfaceName),
+		                _ => null
+	                };
+					continue;
 				}
 				switch (symbol.Kind)
 				{
-                    case SymbolKind.Field:
-						switch (span.ClassificationType)
+					case SymbolKind.Field:
+						yield return span.ClassificationType switch
 						{
-                            case SynthexerConstants.Constant:
-								yield return span.TextSpan.ToTagSpan(snapshot, _constantType);
-								break;
-							case SynthexerConstants.Field:
-								yield return span.TextSpan.ToTagSpan(snapshot, _fieldType);
-								break;
-							case SynthexerConstants.EnumValue:
-								yield return span.TextSpan.ToTagSpan(snapshot, _enumFieldType);
-								break;
-						}
-
+							_ when span.IsOfType(ClassificationTypeNamesEx.ConstantName) => span.TextSpan.ToTagSpan(snapshot, _constantName),
+							_ when span.IsOfType(ClassificationTypeNamesEx.FieldName) => span.TextSpan.ToTagSpan(snapshot, _fieldName),
+							_ when span.IsOfType(ClassificationTypeNamesEx.EnumMemberName) => span.TextSpan.ToTagSpan(snapshot, _enumMemberName),
+							_ => null
+						};
 						break;
 					case SymbolKind.Method:
 						var methodSymbol = (IMethodSymbol) symbol;
                         if (methodSymbol.IsExtensionMethod)
                         {
-                            yield return span.TextSpan.ToTagSpan(snapshot, _extensionMethodType);
+                            yield return span.TextSpan.ToTagSpan(snapshot, _extensionMethodName);
                             break;
                         }
 						if (methodSymbol.IsStatic)
                         {
-                            yield return span.TextSpan.ToTagSpan(snapshot, _staticMethodType);
+                            yield return span.TextSpan.ToTagSpan(snapshot, _staticMethodName);
                             break;
                         }
                         switch (methodSymbol.MethodKind)
 						{
 							case MethodKind.AnonymousFunction:
 							case MethodKind.Ordinary:
-                                yield return span.TextSpan.ToTagSpan(snapshot, _methodType);
+                                yield return span.TextSpan.ToTagSpan(snapshot, _methodName);
 								break;
 							case MethodKind.Constructor:
 							case MethodKind.Destructor:
 							case MethodKind.StaticConstructor:
 								if (methodSymbol.ContainingType.IsAttribute())
 								{
-									yield return span.TextSpan.ToTagSpan(snapshot, _attributeType);
+									yield return span.TextSpan.ToTagSpan(snapshot, _attributeName);
+									break;
 								}
-								else if (methodSymbol.ContainingType.IsReferenceType)
+
+								if (methodSymbol.ContainingType.IsReferenceType)
 								{
-									yield return span.TextSpan.ToTagSpan(snapshot, _classType);
+									yield return span.TextSpan.ToTagSpan(snapshot, _className);
 								}
 								else
 								{
-									yield return span.TextSpan.ToTagSpan(snapshot, _structType);
+									yield return span.TextSpan.ToTagSpan(snapshot, _structName);
 								}
 								break;
 							case MethodKind.LocalFunction:
-								yield return span.TextSpan.ToTagSpan(snapshot, _localFunctionType);
+								yield return span.TextSpan.ToTagSpan(snapshot, _localFunctionName);
 								break;
 							default:
-								yield return span.TextSpan.ToTagSpan(snapshot, _methodType);
+								yield return span.TextSpan.ToTagSpan(snapshot, _methodName);
 								break;
 						}
 						break;
 					case SymbolKind.Parameter:
-						yield return span.TextSpan.ToTagSpan(snapshot, _parameterType);
+						yield return span.TextSpan.ToTagSpan(snapshot, _parameterName);
 						break;
 					case SymbolKind.TypeParameter:
-						yield return span.TextSpan.ToTagSpan(snapshot, _typeParameterType);
+						yield return span.TextSpan.ToTagSpan(snapshot, _typeParameterName);
 						break;
 					case SymbolKind.Namespace:
-						yield return span.TextSpan.ToTagSpan(snapshot, _namespaceType);
+						yield return span.TextSpan.ToTagSpan(snapshot, _namespace);
 						break;
 					case SymbolKind.Property:
-						yield return span.TextSpan.ToTagSpan(snapshot, _propertyType);
+						yield return span.TextSpan.ToTagSpan(snapshot, _propertyName);
 						break;
 					case SymbolKind.Local:
-						yield return span.TextSpan.ToTagSpan(snapshot, _localVariableType);
+						yield return span.TextSpan.ToTagSpan(snapshot, _localName);
 						break;
 					case SymbolKind.Event:
-						yield return span.TextSpan.ToTagSpan(snapshot, _eventType);
+						yield return span.TextSpan.ToTagSpan(snapshot, _eventName);
 						break;
 					case SymbolKind.NamedType:
-						switch (span.ClassificationType)
+						yield return span.ClassificationType switch
 						{
-                            case SynthexerConstants.Class:
-								var classSymbol = (INamedTypeSymbol)symbol;
-								if (classSymbol.IsStatic)
-								{
-									yield return span.TextSpan.ToTagSpan(snapshot, _staticClassType);
-									break;
-								}
-								yield return span.TextSpan.ToTagSpan(snapshot, _classType);
-								break;
-							case SynthexerConstants.Struct:
-								yield return span.TextSpan.ToTagSpan(snapshot, _structType);
-								break;
-							case SynthexerConstants.Enum:
-								yield return span.TextSpan.ToTagSpan(snapshot, _enumType);
-								break;
-							case SynthexerConstants.Interface:
-								yield return span.TextSpan.ToTagSpan(snapshot, _interfaceType);
-								break;
-							case SynthexerConstants.Delegate:
-								yield return span.TextSpan.ToTagSpan(snapshot, _delegateType);
-								break;
-						}
+							_ when span.IsOfType(ClassificationTypeNamesEx.ClassName) => span.TextSpan.ToTagSpan(snapshot, ((INamedTypeSymbol)symbol).IsStatic ? _staticClassName : _className),
+							_ when span.IsOfType(ClassificationTypeNamesEx.StructName) => span.TextSpan.ToTagSpan(snapshot, _structName),
+							_ when span.IsOfType(ClassificationTypeNamesEx.EnumName) => span.TextSpan.ToTagSpan(snapshot, _enumName),
+							_ when span.IsOfType(ClassificationTypeNamesEx.InterfaceName) => span.TextSpan.ToTagSpan(snapshot, _interfaceName),
+							_ when span.IsOfType(ClassificationTypeNamesEx.DelegateName) => span.TextSpan.ToTagSpan(snapshot, _delegateName),
+							_ => null
+						};
 						break;
 				}
 			}
@@ -273,8 +346,20 @@ namespace Synthexer.Core
 				return Classifier.GetClassifiedSpans(model, textSpan, workspace);
 			}).ToList();
             // ReSharper disable once PossibleUnintendedLinearSearchInSet
-            return classifiedSpans.Where(span => span.ClassificationType == ClassificationTypeNames.Identifier || SynthexerConstants.All.Select(a => a.classificationId).Contains(span.ClassificationType, comparer));
-        }
+            var customCls = ClassificationTypeNamesEx.All().Select(a => a.classification).ToList();
+			foreach (ClassifiedSpan span in classifiedSpans)
+            {
+	            var isCustom = false;//SynthexerConstants.All.Select(a => a.classificationId).Contains(span.ClassificationType, comparer);
+	            foreach (var cid in customCls)
+	            {
+		            if (/*!cid.Contains(SynthexerConstants.ScopeName) || */!cid.Contains(span.ClassificationType)) continue;
+		            isCustom = true;
+		            break;
+	            }
+				if (span.ClassificationType == ClassificationTypeNames.Identifier || isCustom) yield return span;
+            }
+			// return classifiedSpans;
+		}
 
 		private class Cache
 		{
@@ -311,6 +396,14 @@ namespace Synthexer.Core
 					Snapshot = snapshot
 				};
 			}
+		}
+	}
+
+	public static class ClassifiedSpanEx
+	{
+		public static bool IsOfType(this ClassifiedSpan span, string classification)
+		{
+			return string.Equals(span.ClassificationType, ClassificationTypeNamesEx.Normalize(classification), StringComparison.InvariantCultureIgnoreCase);
 		}
 	}
 }
